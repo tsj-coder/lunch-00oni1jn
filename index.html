@@ -284,6 +284,22 @@ const SHOPS = [
     h: "1階 11:00〜（土曜の時間は推定）・月曜休み", chk: "review", tel: "03-3271-2463",
     note: "昭和6年創業の洋食屋。伊丹十三監督ゆかりのタンポポオムライスで知られる。",
     photo: "https://www.taimeiken.co.jp/", q: "たいめいけん 日本橋" },
+  { id: "oreno", a: "tokyo", g: "イタリアン", n: "俺のイタリアン 東京駅ヤエチカ", p: "2,000〜4,000円ほど",
+    h: "11:00〜22:00", open: true, rsv: true, chk: "review",
+    note: "「俺の」系列で東京駅まわりに残っている店。八重洲地下街。混んでいると2時間制で、1人1ドリンク・1フード以上の注文が要る。",
+    photo: "https://tabelog.com/tokyo/A1302/A130201/13240231/", q: "俺のイタリアン 東京駅ヤエチカ" },
+  { id: "viaggio", a: "tokyo", g: "イタリアン", n: "Osteria IL VIAGGIO", p: "4,000〜5,000円ほど",
+    h: "11:00〜23:00", open: true, rsv: true, chk: "review", tel: "03-6627-2100",
+    note: "ステーキとパスタの店。グランルーフの2階で、八重洲地下中央口から歩いて1分。",
+    photo: "https://tabelog.com/tokyo/A1302/A130201/13286321/", q: "Osteria IL VIAGGIO 東京駅" },
+  { id: "a16", a: "tokyo", g: "イタリアン", n: "A16 TOKYO", p: "2,000〜4,000円ほど",
+    h: "10:00〜24:00", open: true, rsv: true, chk: "review",
+    note: "窯で焼くピッツァの店。丸の内ブリックスクエアの1階で、東京駅南口から歩いて5分。",
+    photo: "https://tabelog.com/tokyo/A1302/A130201/13096434/", q: "A16 TOKYO 丸の内" },
+  { id: "eataly", a: "tokyo", g: "イタリアン", n: "イータリー 丸の内店", p: "ボロネーゼ 1,580円など",
+    h: "11:00〜22:00", open: true, rsv: true, chk: "review", tel: "03-3217-7070",
+    note: "イタリアの食材店がやっている店。東京駅の地下1階（改札の外）で、丸の内地下北口からすぐ。土日は2時間制。",
+    photo: "https://tabelog.com/tokyo/A1302/A130201/13212522/", q: "イータリー 丸の内店" },
   { id: "kaneko", a: "tokyo", g: "天ぷら・天丼", n: "日本橋 天丼 金子半之助 本店", p: "江戸前天丼 1,600円ほど",
     h: "時間は未確認", chk: "review", tel: "03-3243-0707",
     note: "行列で知られる天丼の店。",
@@ -343,6 +359,14 @@ const SHOPS = [
     h: "11:30〜21:00", open: true, chk: "review", tel: "03-3831-4728",
     note: "上野駅から近い老舗の蕎麦屋。",
     photo: "https://retty.me/restaurant/100000062500/", q: "上野藪そば" },
+  { id: "chirombo", a: "ueno", g: "イタリアン", n: "チロンボ・マリーナ", p: "マルゲリータ 1,310円ほど",
+    h: "11:30〜15:00", rsv: true, chk: "review",
+    note: "ピッツァと魚介の店。上野駅浅草口からすぐ。昼はサラダの食べ放題つきで、90分制。",
+    photo: "https://tabelog.com/tokyo/A1311/A131101/13211099/", q: "チロンボ・マリーナ 上野" },
+  { id: "aranjarsi", a: "ueno", g: "イタリアン", n: "アランジャルシ", p: "ピッツァのランチ 1,430円ほど",
+    h: "11:30〜14:30・日曜休み", rsv: true, chk: "review", tel: "03-3812-9616",
+    note: "16席の小さなナポリピッツァの店。予約が取りにくい。湯島駅から歩いて4分ほど。",
+    photo: "https://tabelog.com/tokyo/A1311/A131101/13057017/", q: "アランジャルシ 湯島" },
   { id: "kamotonegi", a: "ueno", g: "ラーメン", n: "らーめん 鴨to葱", p: "鴨らーめん 1,080円ほど",
     h: "10:00〜22:30（スープがなくなり次第終わり）", open: true, chk: "review",
     note: "鴨のだしのラーメン。御徒町駅から歩いて2分。",
@@ -366,6 +390,11 @@ const SHOPS = [
     note: "明治17年創業。木造の店構えに江戸の雰囲気が残る。",
     photo: "https://visit-chiyoda.tokyo/app/spot/detail/359", q: "神田まつや" },
 
+  { id: "nohga", a: "kanda", g: "イタリアン", n: "PIZZERIA & BAR NOHGA", p: "昼はコースのみ（値段は未確認）",
+    h: "11:30〜16:00（最終注文15:00）", rsv: true, chk: "review",
+    note: "NOHGA HOTEL 秋葉原の1階のピッツァの店。末広町駅から歩いて4分。",
+    photo: "https://tabelog.com/tokyo/A1311/A131101/13248479/", q: "PIZZERIA & BAR NOHGA 秋葉原" },
+
   // ドームの横
   { id: "tamailaqua", a: "dome", g: "鰻・穴子", n: "日本橋 玉ゐ ラクーア店", p: "玉ゐ天重 1,815円", ps: "この店だけのメニュー",
     h: "時間は未確認（ラクーアの飲食店はおおむね11:00〜22:00）", chk: "review",
@@ -378,6 +407,13 @@ const SHOPS = [
 ];
 
 const TABELOG = {
+  oreno: ["3.40", "https://tabelog.com/tokyo/A1302/A130201/13240231/"],
+  viaggio: ["3.59", "https://tabelog.com/tokyo/A1302/A130201/13286321/"],
+  a16: ["3.49", "https://tabelog.com/tokyo/A1302/A130201/13096434/"],
+  eataly: ["3.47", "https://tabelog.com/tokyo/A1302/A130201/13212522/"],
+  chirombo: ["3.49", "https://tabelog.com/tokyo/A1311/A131101/13211099/"],
+  aranjarsi: ["3.66", "https://tabelog.com/tokyo/A1311/A131101/13057017/"],
+  nohga: ["3.50", "https://tabelog.com/tokyo/A1311/A131101/13248479/"],
   fujiro: ["3.47", "https://tabelog.com/tokyo/A1302/A130201/13282558/"],
   tamai: ["3.60", "https://tabelog.com/tokyo/A1302/A130202/13019904/"],
   moritaya: ["3.61", "https://tabelog.com/tokyo/A1302/A130201/13006083/"],
@@ -408,7 +444,7 @@ const TABELOG = {
   jojoen: ["3.34", "https://tabelog.com/tokyo/A1310/A131003/13003545/"]
 };
 
-const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "肉", "とんかつ", "洋食", "和食の膳", "ラーメン"];
+const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "肉", "とんかつ", "洋食", "イタリアン", "和食の膳", "ラーメン"];
 const FLAGS = [
   { id: "open", label: "中休みなし" },
   { id: "rsv", label: "予約できる" },
