@@ -142,6 +142,9 @@ section > h2 { font-family: var(--font-display); font-size: 22px; margin-bottom:
   color: var(--muted);
 }
 .star[aria-pressed="true"] { color: var(--star); border-color: var(--star); }
+.rating { font-size: 13px; color: var(--muted); text-decoration: none; display: inline-flex; gap: 6px; align-items: baseline; width: fit-content; }
+.rating b { font-size: 17px; color: var(--star); }
+.rating:hover span { text-decoration: underline; }
 .price { font-weight: 700; font-size: 16px; }
 .price small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
 .hours { font-size: 14px; }
@@ -202,6 +205,7 @@ section > h2 { font-family: var(--font-display); font-size: 22px; margin-bottom:
     <div class="filter-row" id="row-area"><span class="filter-label">降りる駅</span></div>
     <div class="filter-row" id="row-genre"><span class="filter-label">料理</span></div>
     <div class="filter-row" id="row-flag"><span class="filter-label">条件</span></div>
+    <div class="filter-row" id="row-sort"><span class="filter-label">並び順</span></div>
     <div class="count" id="count" aria-live="polite"></div>
   </section>
 
@@ -211,6 +215,7 @@ section > h2 { font-family: var(--font-display); font-size: 22px; margin-bottom:
   <section>
     <h2>見方と注意</h2>
     <div class="plain">
+      <p>食べログの点数は2026年11月12日に見たものです。点数は日々変わります。</p>
       <p>「要確認」の店は、値段か時間を口コミサイトやまとめサイトでしか確かめられませんでした。行く前に電話か店のページで確かめてください。</p>
       <ul>
         <li>メニューの写真は店や口コミサイトのものなので、このページには載せず「写真とメニュー」のリンクから見られるようにしました。</li>
@@ -285,7 +290,7 @@ const SHOPS = [
     photo: "https://retty.me/restaurant/100001267694/", q: "金子半之助 日本橋本店" },
   { id: "ramenstreet", a: "tokyo", g: "ラーメン", n: "東京ラーメンストリート", p: "1杯 1,000〜2,000円ほど",
     h: "10:30〜23:00（最終注文22:30）", open: true, chk: "site",
-    note: "八重洲口の地下1階に10軒。土曜の昼は行列ができる。",
+    note: "八重洲口の地下1階に10軒。土曜の昼は行列ができる。食べログの点数は店ごとに分かれているので、ここには載せていない。",
     sub: ["六厘舎（濃いつけ麺）", "東京駅 斑鳩（魚介とんこつ）", "ひるがお（塩）", "そらのいろ NIPPON（野菜も使ったあっさり系）", "らーめん玉（煮干し）", "津軽煮干 ひらこ屋（青森の煮干し）", "花道庵（味噌）", "俺式 純（とんこつ）", "革新家 TOKYO（家系＝豚骨しょうゆの太麺）", "食堂はせ川（喜多方）"],
     photo: "https://www.gltjp.com/ja/tokyoeki-1bangai/ramen-street/", q: "東京ラーメンストリート" },
   { id: "kaminari", a: "tokyo", g: "ラーメン", n: "ラーメン 雷 東京本丸店", p: "1,000〜1,500円ほど",
@@ -372,6 +377,37 @@ const SHOPS = [
     photo: "https://gurunavi.com/en/g271794/rev/rst/", q: "叙々苑 東京ドームシティラクーア店" }
 ];
 
+const TABELOG = {
+  fujiro: ["3.47", "https://tabelog.com/tokyo/A1302/A130201/13282558/"],
+  tamai: ["3.60", "https://tabelog.com/tokyo/A1302/A130202/13019904/"],
+  moritaya: ["3.61", "https://tabelog.com/tokyo/A1302/A130201/13006083/"],
+  tsunahachi: ["3.24", "https://tabelog.com/tokyo/A1302/A130201/13031392/"],
+  butasute: ["3.49", "https://tabelog.com/tokyo/A1302/A130201/13153781/"],
+  hanamaru: ["3.55", "https://tabelog.com/tokyo/A1302/A130201/13153777/"],
+  sunaba: ["3.66", "https://tabelog.com/tokyo/A1310/A131002/13000316/"],
+  taimeiken: ["3.49", "https://tabelog.com/tokyo/A1302/A130202/13252161/"],
+  kaneko: ["3.52", "https://tabelog.com/tokyo/A1302/A130202/13118694/"],
+  kaminari: ["3.66", "https://tabelog.com/tokyo/A1302/A130201/13249452/"],
+  ichigen: ["3.56", "https://tabelog.com/tokyo/A1302/A130201/13208370/"],
+  tsujita: ["3.43", "https://tabelog.com/tokyo/A1302/A130202/13158035/"],
+  zagin: ["3.44", "https://tabelog.com/tokyo/A1302/A130201/13300520/"],
+  menban: ["3.71", "https://tabelog.com/tokyo/A1302/A130201/13232095/"],
+  tonari: ["3.70", "https://tabelog.com/tokyo/A1302/A130201/13111899/"],
+  izuei: ["3.50", "https://tabelog.com/tokyo/A1311/A131101/13003586/"],
+  inshotei: ["3.62", "https://tabelog.com/tokyo/A1311/A131101/13003560/"],
+  kurofune: ["3.60", "https://tabelog.com/tokyo/A1311/A131101/13003640/"],
+  ponta: ["3.77", "https://tabelog.com/tokyo/A1311/A131101/13003587/"],
+  isen: ["3.53", "https://tabelog.com/tokyo/A1311/A131101/13003619/"],
+  uenoyabu: ["3.50", "https://tabelog.com/tokyo/A1311/A131101/13003594/"],
+  kamotonegi: ["3.73", "https://tabelog.com/tokyo/A1311/A131101/13210392/"],
+  hare: ["3.79", "https://tabelog.com/tokyo/A1311/A131104/13143115/"],
+  honda: ["3.81", "https://tabelog.com/tokyo/A1310/A131001/13246285/"],
+  kandayabu: ["3.49", "https://tabelog.com/tokyo/A1310/A131002/13000334/"],
+  matsuya: ["3.66", "https://tabelog.com/tokyo/A1310/A131002/13000340/"],
+  tamailaqua: ["3.42", "https://tabelog.com/tokyo/A1310/A131003/13284159/"],
+  jojoen: ["3.34", "https://tabelog.com/tokyo/A1310/A131003/13003545/"]
+};
+
 const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "肉", "とんかつ", "洋食", "和食の膳", "ラーメン"];
 const FLAGS = [
   { id: "open", label: "中休みなし" },
@@ -379,7 +415,7 @@ const FLAGS = [
   { id: "star", label: "★だけ" }
 ];
 
-const state = { area: "all", genre: "all", flags: new Set() };
+const state = { area: "all", genre: "all", flags: new Set(), sort: "default" };
 let stars = new Set();
 try { stars = new Set(JSON.parse(localStorage.getItem("dome-lunch-stars") || "[]")); } catch (e) {}
 function saveStars() { try { localStorage.setItem("dome-lunch-stars", JSON.stringify([...stars])); } catch (e) {} }
@@ -404,7 +440,8 @@ function buildFilters() {
   const ra = document.getElementById("row-area");
   const rg = document.getElementById("row-genre");
   const rf = document.getElementById("row-flag");
-  [ra, rg, rf].forEach(r => { while (r.children.length > 1) r.lastChild.remove(); });
+  const rs = document.getElementById("row-sort");
+  [ra, rg, rf, rs].forEach(r => { while (r.children.length > 1) r.lastChild.remove(); });
   ra.append(chip("すべて", state.area === "all", () => { state.area = "all"; render(); }));
   AREAS.forEach(a => ra.append(chip(a.name, state.area === a.id, () => { state.area = a.id; render(); })));
   rg.append(chip("すべて", state.genre === "all", () => { state.genre = "all"; render(); }));
@@ -412,6 +449,8 @@ function buildFilters() {
   FLAGS.forEach(f => rf.append(chip(f.label, state.flags.has(f.id), () => {
     state.flags.has(f.id) ? state.flags.delete(f.id) : state.flags.add(f.id); render();
   })));
+  rs.append(chip("おすすめ順", state.sort === "default", () => { state.sort = "default"; render(); }));
+  rs.append(chip("食べログの点が高い順", state.sort === "tb", () => { state.sort = "tb"; render(); }));
 }
 
 function matches(s) {
@@ -436,6 +475,8 @@ function card(s) {
   );
   const sub = s.sub ? el("ul", { class: "sub" }, ...s.sub.map(t => el("li", { text: t }))) : null;
   const map = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.q);
+  const tb = TABELOG[s.id];
+  const rating = tb ? el("a", { class: "rating", href: tb[1], target: "_blank", rel: "noopener" }, el("span", { text: "食べログ" }), el("b", { text: tb[0] }), el("span", { text: "↗" })) : null;
   const links = el("div", { class: "links" },
     el("a", { href: s.photo, target: "_blank", rel: "noopener", text: "写真とメニュー ↗" }),
     el("a", { href: map, target: "_blank", rel: "noopener", text: "地図 ↗" }),
@@ -446,6 +487,7 @@ function card(s) {
       el("div", {}, el("div", { class: "genre", text: s.g }), el("h3", { text: s.n })),
       starBtn
     ),
+    rating,
     el("div", { class: "price" }, s.p, s.ps ? el("small", { text: s.ps }) : null),
     el("div", { class: "hours", text: s.h }),
     badges,
@@ -462,6 +504,7 @@ function render() {
   let total = 0;
   AREAS.forEach(a => {
     const shops = SHOPS.filter(s => s.a === a.id && matches(s));
+    if (state.sort === "tb") shops.sort((x, y) => (TABELOG[y.id] ? +TABELOG[y.id][0] : 0) - (TABELOG[x.id] ? +TABELOG[x.id][0] : 0));
     if (!shops.length) return;
     total += shops.length;
     const routes = el("div", { class: "routes" }, ...a.routes.map(r =>
