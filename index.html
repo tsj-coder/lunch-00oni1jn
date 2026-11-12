@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>東京駅・上野 昼ごはん帖</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@700&display=swap">
+<style>
+/* 切符と駅の路線色を手がかりに、降りる駅ごとに店を並べる。上に1日の流れとおすすめ、下に全候補 */
+:root {
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  --paper: #eef1f5;
+  --card: #ffffff;
+  --ink: #1c2333;
+  --muted: #5a6477;
+  --line: #d3d9e3;
+  --accent: #2c4783;
+  --accent-soft: #e2e8f5;
+  --star: #b47b00;
+  --ok: #2f7a4b;
+  --ok-soft: #e1f1e6;
+  --warn: #9a5a00;
+  --warn-soft: #fbefdc;
+  --font-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --marunouchi: #f62e36;
+  --oedo: #b6007a;
+  --sobu: #ffd400;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11151d; --card: #1a202b; --ink: #e5e9f0; --muted: #9ba4b6; --line: #2b3343;
+    --accent: #93abe6; --accent-soft: #232d44; --star: #e3b440;
+    --ok: #7fcf9a; --ok-soft: #1c3326; --warn: #f0b765; --warn-soft: #3a2c17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11151d; --card: #1a202b; --ink: #e5e9f0; --muted: #9ba4b6; --line: #2b3343;
+  --accent: #93abe6; --accent-soft: #232d44; --star: #e3b440;
+  --ok: #7fcf9a; --ok-soft: #1c3326; --warn: #f0b765; --warn-soft: #3a2c17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  font-variant-numeric: tabular-nums;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 36px;
+}
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+
+/* 見出し：切符の券面のように */
+.ticket {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 22px 18px;
+  display: grid;
+  gap: 14px;
+}
+.ticket-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; padding-bottom: 10px; border-bottom: 1px dashed var(--line); }
+.eyebrow { font-size: 12px; letter-spacing: .12em; color: var(--muted); }
+h1 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 40px); line-height: 1.25; padding-top: 6px; }
+.lede { margin: 0; color: var(--muted); max-width: 62ch; }
+.rules { display: flex; flex-wrap: wrap; gap: 8px; }
+.rule { font-size: 13px; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+
+/* 1日の流れ */
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
+.flow li { padding: 10px 12px 4px 0; border-top: 3px solid var(--accent); display: grid; gap: 2px; min-width: 0; }
+.flow li.main { border-top-color: var(--star); }
+.flow time { font-weight: 700; font-size: 18px; }
+.flow span { font-size: 13px; color: var(--muted); }
+@media (max-width: 640px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow li { border-top: 0; border-left: 3px solid var(--accent); padding: 4px 0 8px 12px; grid-template-columns: 56px 1fr; align-items: baseline; }
+  .flow li.main { border-left-color: var(--star); }
+  .flow time { font-size: 16px; }
+}
+
+section > h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 4px; }
+.section-note { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+
+/* おすすめ */
+.picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; }
+.pick { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.pick .when { font-size: 12px; letter-spacing: .08em; color: var(--star); font-weight: 700; }
+.pick h3 { font-size: 18px; }
+.pick p { margin: 0; font-size: 14px; color: var(--muted); }
+
+/* 絞り込み */
+.filters { display: grid; gap: 10px; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.filter-label { font-size: 12px; color: var(--muted); width: 5.5em; flex: none; }
+.chip {
+  font: inherit; font-size: 13px; cursor: pointer;
+  padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--card); }
+.count { font-size: 13px; color: var(--muted); }
+
+/* 地域ごと */
+.area { display: grid; gap: 12px; }
+.area-head { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+.area-head h2 { font-family: var(--font-display); font-size: 22px; }
+.area-hint { font-size: 13px; color: var(--muted); }
+.routes { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+.route { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 2px 10px 2px 2px; }
+.route b { font-size: 12px; padding: 1px 8px; border-radius: 3px; color: #fff; font-weight: 700; }
+.route b.sobu { color: #1c2333; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: 14px 16px; display: grid; gap: 8px; align-content: start; min-width: 0;
+}
+.card-top { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.card h3 { font-size: 17px; line-height: 1.4; }
+.genre { font-size: 12px; color: var(--muted); }
+.star {
+  font: inherit; font-size: 20px; line-height: 1; cursor: pointer; flex: none;
+  background: none; border: 1px solid var(--line); border-radius: 4px; width: 34px; height: 34px;
+  color: var(--muted);
+}
+.star[aria-pressed="true"] { color: var(--star); border-color: var(--star); }
+.price { font-weight: 700; font-size: 16px; }
+.price small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.hours { font-size: 14px; }
+.hours::before { content: "土曜の昼　"; font-size: 12px; color: var(--muted); }
+.badges { display: flex; flex-wrap: wrap; gap: 4px; }
+.badge { font-size: 12px; padding: 0 8px; border-radius: 3px; border: 1px solid transparent; }
+.badge.open { background: var(--ok-soft); color: var(--ok); }
+.badge.rsv { background: var(--accent-soft); color: var(--accent); }
+.badge.chk-official, .badge.chk-site { background: transparent; border-color: var(--line); color: var(--muted); }
+.badge.chk-review { background: var(--warn-soft); color: var(--warn); }
+.note { margin: 0; font-size: 14px; color: var(--muted); }
+.sub { margin: 0; padding-left: 1.2em; font-size: 13px; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 8px; }
+.tel { font-size: 13px; color: var(--muted); user-select: all; }
+
+.empty { color: var(--muted); font-size: 14px; }
+
+/* 外した店・注意 */
+.plain { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; }
+.plain ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.plain p { margin: 0 0 8px; }
+.foot { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+.foot p { margin: 0; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header class="ticket">
+    <h1>東京駅・上野 昼ごはん帖</h1>
+    <p class="lede">東京駅・上野・秋葉原と神田・東京ドームの横で、土曜の昼に入れる店を、降りる駅ごとに並べました。</p>
+  </header>
+
+  <section>
+    <h2>まず見るなら</h2>
+    <p class="section-note">迷ったらこの3つから。</p>
+    <div class="picks">
+      <article class="pick">
+        <span class="when">東京駅で降りるなら</span>
+        <h3>鮨 不二楼 新丸ビル</h3>
+        <p>鮨セット13品が4,000円（税・サービス料込み）。中休み（昼と夜の間に閉める時間）がなく予約もできるので、電車が遅れても慌てずにすみます。</p>
+      </article>
+      <article class="pick">
+        <span class="when">上野で降りるなら</span>
+        <h3>伊豆榮 本店</h3>
+        <p>江戸時代から続く鰻屋で、うな重の松が3,960円。中休みがなく、電話で予約できます。上野駅から歩いて5分です。</p>
+      </article>
+      <article class="pick">
+        <span class="when">さっと食べて早めに移動するなら</span>
+        <h3>東京ラーメンストリート</h3>
+        <p>八重洲口の地下に10軒が並びます。行列はできますが、食べ終わるのが早いので時間が読みやすい店です。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="filters" aria-label="絞り込み">
+    <div class="filter-row" id="row-area"><span class="filter-label">降りる駅</span></div>
+    <div class="filter-row" id="row-genre"><span class="filter-label">料理</span></div>
+    <div class="filter-row" id="row-flag"><span class="filter-label">条件</span></div>
+    <div class="count" id="count" aria-live="polite"></div>
+  </section>
+
+  <div id="list" style="display:grid;gap:32px"></div>
+
+
+  <section>
+    <h2>見方と注意</h2>
+    <div class="plain">
+      <p>「要確認」の店は、値段か時間を口コミサイトやまとめサイトでしか確かめられませんでした。行く前に電話か店のページで確かめてください。</p>
+      <ul>
+        <li>メニューの写真は店や口コミサイトのものなので、このページには載せず「写真とメニュー」のリンクから見られるようにしました。</li>
+        <li>★は、このページを開いた端末にだけ残ります。2人で別々のスマホから付けた印は共有されません。</li>
+        <li>東京ドームでイベントがある日は、水道橋駅のまわりが昼から混みます。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>2026年11月に調べた内容です。値段と時間は変わることがあります。</p>
+  </footer>
+</div>
+
+<script>
+const AREAS = [
+  { id: "tokyo", name: "東京駅・日本橋", hint: "新幹線を東京駅で降りるなら",
+    routes: [{ line: "丸ノ内線", cls: "marunouchi", text: "東京 → 後楽園　乗り換えなし・5駅" }] },
+  { id: "ueno", name: "上野・御徒町", hint: "新幹線を上野駅で降りるなら",
+    routes: [{ line: "大江戸線", cls: "oedo", text: "上野御徒町 → 春日　2駅" }] },
+  { id: "kanda", name: "秋葉原・神田", hint: "上野から向かう途中で降りるなら",
+    routes: [
+      { line: "丸ノ内線", cls: "marunouchi", text: "淡路町 → 後楽園　3駅" },
+      { line: "JR総武線", cls: "sobu", text: "秋葉原 → 水道橋　2駅" }
+    ] },
+  { id: "dome", name: "ドームの横", hint: "後楽園・ラクーア。混んで入れないときの控え", routes: [] }
+];
+
+const CHK = {
+  official: "店・公的機関の情報で確認",
+  site: "予約サイトで確認",
+  review: "要確認"
+};
+
+const SHOPS = [
+  // 東京駅・日本橋
+  { id: "fujiro", a: "tokyo", g: "寿司", n: "鮨 不二楼 新丸ビル", p: "鮨セット13品 4,000円", ps: "税・サービス料込み",
+    h: "11:00〜23:00", open: true, rsv: true, chk: "site",
+    note: "日本橋の会員制の寿司店が出した店。新丸ビルの中で、丸の内口からすぐ。",
+    photo: "https://www.ozmall.co.jp/restaurant/10980/", q: "鮨&BAR 不二楼 新丸ビル" },
+  { id: "tamai", a: "tokyo", g: "鰻・穴子", n: "日本橋 玉ゐ 本店", p: "箱めし 小2,500円／中3,800円／大4,600円",
+    h: "11:00〜15:30（最終注文15:00）", chk: "official", tel: "03-3272-3227",
+    note: "穴子の専門店。昼は予約できないので、並ぶつもりで。東京駅八重洲口から歩いて8分。",
+    photo: "https://www.anago-tamai.com/menu/", q: "日本橋 玉ゐ 本店" },
+  { id: "moritaya", a: "tokyo", g: "肉", n: "モリタ屋 東京丸の内店", p: "昼 3,500円ほど",
+    h: "11:00〜15:00（最終注文14:00）", rsv: true, chk: "site",
+    note: "京都の老舗の肉屋がやっているすき焼きの店。丸ビルの35階で、景色を見ながら食べられる。",
+    photo: "https://restaurant.ikyu.com/103646/highlights", q: "モリタ屋 東京丸の内店" },
+  { id: "tsunahachi", a: "tokyo", g: "天ぷら・天丼", n: "新宿つな八 大丸東京店", p: "「夕顔」4,510円", ps: "税・サービス料込み",
+    h: "最終注文14:00（予約サイトの掲載）", rsv: true, chk: "site", tel: "03-3211-2783",
+    note: "大丸東京店の12階。一品ずつ揚げてくれる。ぐるなびには11:00〜22:00の通し営業と載っていて、時間の情報が食い違う。",
+    photo: "https://www.ozmall.co.jp/restaurant/7699/", q: "新宿つな八 大丸東京店" },
+  { id: "butasute", a: "tokyo", g: "肉", n: "豚捨 KITTE丸の内店", p: "牛丼・すき焼き 2,000〜3,000円ほど",
+    h: "11:00〜14:30（最終注文13:30）", chk: "review",
+    note: "三重・伊勢の老舗の肉屋。KITTEの5階。昼の最終注文が13:30と早い。",
+    photo: "https://aumo.jp/articles/20749", q: "豚捨 KITTE丸の内店" },
+  { id: "hanamaru", a: "tokyo", g: "寿司", n: "回転寿司 根室花まる KITTE丸の内店", p: "2,000〜4,000円ほど",
+    h: "11:00〜22:00", open: true, chk: "review", tel: "03-6269-9026",
+    note: "北海道の人気の回転寿司。整理券を取って1時間ほど待ったという口コミがある。",
+    photo: "https://r.gnavi.co.jp/gd1n621/", q: "根室花まる KITTE丸の内店" },
+  { id: "sunaba", a: "tokyo", g: "蕎麦", n: "室町砂場 日本橋本店", p: "1,500〜2,500円ほど",
+    h: "11:30〜16:00（最終注文15:30）・日祝休み", chk: "review", tel: "03-3241-4038",
+    note: "天ざる（天ぷらを添えたざる蕎麦）を始めたとされる老舗。",
+    photo: "https://r.gnavi.co.jp/g212300/", q: "室町砂場 日本橋本店" },
+  { id: "taimeiken", a: "tokyo", g: "洋食", n: "たいめいけん 日本橋", p: "オムライス 1,850円ほど",
+    h: "1階 11:00〜（土曜の時間は推定）・月曜休み", chk: "review", tel: "03-3271-2463",
+    note: "昭和6年創業の洋食屋。伊丹十三監督ゆかりのタンポポオムライスで知られる。",
+    photo: "https://www.taimeiken.co.jp/", q: "たいめいけん 日本橋" },
+  { id: "kaneko", a: "tokyo", g: "天ぷら・天丼", n: "日本橋 天丼 金子半之助 本店", p: "江戸前天丼 1,600円ほど",
+    h: "時間は未確認", chk: "review", tel: "03-3243-0707",
+    note: "行列で知られる天丼の店。",
+    photo: "https://retty.me/restaurant/100001267694/", q: "金子半之助 日本橋本店" },
+  { id: "ramenstreet", a: "tokyo", g: "ラーメン", n: "東京ラーメンストリート", p: "1杯 1,000〜2,000円ほど",
+    h: "10:30〜23:00（最終注文22:30）", open: true, chk: "site",
+    note: "八重洲口の地下1階に10軒。土曜の昼は行列ができる。",
+    sub: ["六厘舎（濃いつけ麺）", "東京駅 斑鳩（魚介とんこつ）", "ひるがお（塩）", "そらのいろ NIPPON（野菜も使ったあっさり系）", "らーめん玉（煮干し）", "津軽煮干 ひらこ屋（青森の煮干し）", "花道庵（味噌）", "俺式 純（とんこつ）", "革新家 TOKYO（家系＝豚骨しょうゆの太麺）", "食堂はせ川（喜多方）"],
+    photo: "https://www.gltjp.com/ja/tokyoeki-1bangai/ramen-street/", q: "東京ラーメンストリート" },
+  { id: "kaminari", a: "tokyo", g: "ラーメン", n: "ラーメン 雷 東京本丸店", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "千葉の名店「とみ田」の直営で、量が多い。改札の中（グランスタ）。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "ラーメン 雷 東京本丸店" },
+  { id: "ichigen", a: "tokyo", g: "ラーメン", n: "えびそば一幻 八重洲地下街店", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "札幌の、海老でとったスープのラーメン。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "えびそば一幻 八重洲地下街店" },
+  { id: "tsujita", a: "tokyo", g: "ラーメン", n: "つじ田 日本橋八重洲店", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "つけ麺の店。口コミの数が多い。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "つじ田 日本橋八重洲店" },
+  { id: "zagin", a: "tokyo", g: "ラーメン", n: "鶏soba 座銀 KITTE丸の内店", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "鶏白湯（鶏を煮出した白いスープ）のラーメン。大阪の店で、KITTEの地下1階。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "鶏soba 座銀 KITTE丸の内店" },
+  { id: "menban", a: "tokyo", g: "ラーメン", n: "松戸富田麺絆 KITTE丸の内", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "千葉の名店「とみ田」の流れをくむ店。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "松戸富田麺絆 KITTE" },
+  { id: "tonari", a: "tokyo", g: "ラーメン", n: "タンメン トナリ 丸の内", p: "1,000〜1,500円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "野菜たっぷりのタンメン。東京ビルTOKIAの地下1階。",
+    photo: "https://ascii.jp/elem/000/004/023/4023640/", q: "タンメン トナリ 丸の内" },
+
+  // 上野・御徒町
+  { id: "izuei", a: "ueno", g: "鰻・穴子", n: "伊豆榮 本店", p: "うな重 松 3,960円", ps: "竹 5,060円／梅 6,160円",
+    h: "11:00〜21:00（最終注文20:15）・年中無休", open: true, rsv: true, chk: "official", tel: "03-3831-0954",
+    note: "江戸時代から続く鰻屋。不忍池の前。予約は電話だけ。",
+    photo: "https://izuei.co.jp/menu", q: "伊豆榮 本店 上野" },
+  { id: "inshotei", a: "ueno", g: "和食の膳", n: "韻松亭", p: "花籠本膳 4,400円", ps: "税込",
+    h: "昼の料理の最終注文 15:00・2時間制", rsv: true, chk: "site", tel: "03-3821-8126",
+    note: "上野公園の中の料亭。豆腐と鶏の料理。ネット予約は前日20時まで。",
+    photo: "https://www.tablecheck.com/shops/inshoutei/reserve", q: "韻松亭 上野公園" },
+  { id: "kurofune", a: "ueno", g: "洋食", n: "上野 黒船亭", p: "ハヤシライス 2,700円／ビーフシチュー 4,800円",
+    h: "11:30〜21:30", open: true, chk: "review",
+    note: "上野の老舗の洋食屋。ビーフシチューが名物。",
+    photo: "https://www.hotpepper.jp/strJ000012146/", q: "黒船亭 上野" },
+  { id: "ponta", a: "ueno", g: "とんかつ", n: "ぽん多本家", p: "カツレツとご飯で 4,000円ほど",
+    h: "11:00〜14:00（最終注文13:45）", chk: "review", tel: "03-3831-2351",
+    note: "明治38年創業。昼の最終注文が13:45と早い。",
+    photo: "https://gurunavi.com/ja/g608200/rev/rst/", q: "ぽん多本家 上野" },
+  { id: "isen", a: "ueno", g: "とんかつ", n: "井泉 本店", p: "ヒレかつ定食 2,200円ほど",
+    h: "昼の最終注文14:30・水曜休み", chk: "review", tel: "03-3834-2901",
+    note: "昭和5年創業で、かつサンド発祥の店。上野広小路駅から歩いて1分。",
+    photo: "https://r.gnavi.co.jp/a226600/", q: "井泉 本店 湯島" },
+  { id: "uenoyabu", a: "ueno", g: "蕎麦", n: "上野藪そば", p: "1,000〜2,500円ほど",
+    h: "11:30〜21:00", open: true, chk: "review", tel: "03-3831-4728",
+    note: "上野駅から近い老舗の蕎麦屋。",
+    photo: "https://retty.me/restaurant/100000062500/", q: "上野藪そば" },
+  { id: "kamotonegi", a: "ueno", g: "ラーメン", n: "らーめん 鴨to葱", p: "鴨らーめん 1,080円ほど",
+    h: "10:00〜22:30（スープがなくなり次第終わり）", open: true, chk: "review",
+    note: "鴨のだしのラーメン。御徒町駅から歩いて2分。",
+    photo: "https://aumo.jp/articles/38756", q: "らーめん 鴨to葱 御徒町" },
+  { id: "hare", a: "ueno", g: "ラーメン", n: "麺処 晴", p: "1,000円ほど",
+    h: "時間は未確認", chk: "review",
+    note: "煮干しのラーメン。2025年まで8年続けて食べログ百名店（食べログが毎年選ぶ人気店）。",
+    photo: "https://aumo.jp/articles/25251", q: "麺処 晴 ラーメン" },
+
+  // 秋葉原・神田
+  { id: "honda", a: "kanda", g: "ラーメン", n: "麺処 ほん田 秋葉原本店", p: "1,000〜1,500円ほど",
+    h: "11:30〜15:00・水曜休み", chk: "review",
+    note: "しょうゆと塩のラーメン。秋葉原駅から歩いて行ける。",
+    photo: "https://retty.me/restaurant/100001540296/", q: "麺処 ほん田 秋葉原本店" },
+  { id: "kandayabu", a: "kanda", g: "蕎麦", n: "かんだやぶそば", p: "2,000〜3,000円ほど", ps: "値段は相場からの目安",
+    h: "11:30〜（最終注文20:00）・水曜休み", open: true, rsv: true, chk: "official", tel: "03-3251-0287",
+    note: "明治から続く老舗。天ぷらとお酒を足しても手ごろ。淡路町駅の近く。",
+    photo: "https://www.yabusoba.net/", q: "かんだやぶそば" },
+  { id: "matsuya", a: "kanda", g: "蕎麦", n: "神田まつや", p: "1,000〜2,000円ほど",
+    h: "11:00〜19:30（最終注文19:00）・日曜休み", open: true, chk: "official", tel: "03-3251-1556",
+    note: "明治17年創業。木造の店構えに江戸の雰囲気が残る。",
+    photo: "https://visit-chiyoda.tokyo/app/spot/detail/359", q: "神田まつや" },
+
+  // ドームの横
+  { id: "tamailaqua", a: "dome", g: "鰻・穴子", n: "日本橋 玉ゐ ラクーア店", p: "玉ゐ天重 1,815円", ps: "この店だけのメニュー",
+    h: "時間は未確認（ラクーアの飲食店はおおむね11:00〜22:00）", chk: "review",
+    note: "日本橋の穴子の店が、東京ドームシティのラクーアに出している店。",
+    photo: "https://www.anago-tamai.com/menu/", q: "日本橋 玉ゐ ラクーア店" },
+  { id: "jojoen", a: "dome", g: "肉", n: "叙々苑 東京ドームシティラクーア店", p: "昼 3,000〜4,000円ほど",
+    h: "昼のメニューは16:00まで", chk: "review", tel: "03-3816-8989",
+    note: "ほかの店より遅くまで昼のメニューがある焼肉店。",
+    photo: "https://gurunavi.com/en/g271794/rev/rst/", q: "叙々苑 東京ドームシティラクーア店" }
+];
+
+const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "肉", "とんかつ", "洋食", "和食の膳", "ラーメン"];
+const FLAGS = [
+  { id: "open", label: "中休みなし" },
+  { id: "rsv", label: "予約できる" },
+  { id: "star", label: "★だけ" }
+];
+
+const state = { area: "all", genre: "all", flags: new Set() };
+let stars = new Set();
+try { stars = new Set(JSON.parse(localStorage.getItem("dome-lunch-stars") || "[]")); } catch (e) {}
+function saveStars() { try { localStorage.setItem("dome-lunch-stars", JSON.stringify([...stars])); } catch (e) {} }
+
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") e.className = v; else if (k === "text") e.textContent = v; else e.setAttribute(k, v);
+  }
+  for (const k of kids) if (k != null) e.append(k);
+  return e;
+}
+
+function chip(label, pressed, onClick) {
+  const b = el("button", { type: "button", class: "chip", "aria-pressed": String(pressed), text: label });
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function buildFilters() {
+  const ra = document.getElementById("row-area");
+  const rg = document.getElementById("row-genre");
+  const rf = document.getElementById("row-flag");
+  [ra, rg, rf].forEach(r => { while (r.children.length > 1) r.lastChild.remove(); });
+  ra.append(chip("すべて", state.area === "all", () => { state.area = "all"; render(); }));
+  AREAS.forEach(a => ra.append(chip(a.name, state.area === a.id, () => { state.area = a.id; render(); })));
+  rg.append(chip("すべて", state.genre === "all", () => { state.genre = "all"; render(); }));
+  GENRES.forEach(g => rg.append(chip(g, state.genre === g, () => { state.genre = g; render(); })));
+  FLAGS.forEach(f => rf.append(chip(f.label, state.flags.has(f.id), () => {
+    state.flags.has(f.id) ? state.flags.delete(f.id) : state.flags.add(f.id); render();
+  })));
+}
+
+function matches(s) {
+  if (state.area !== "all" && s.a !== state.area) return false;
+  if (state.genre !== "all" && s.g !== state.genre) return false;
+  if (state.flags.has("open") && !s.open) return false;
+  if (state.flags.has("rsv") && !s.rsv) return false;
+  if (state.flags.has("star") && !stars.has(s.id)) return false;
+  return true;
+}
+
+function card(s) {
+  const starBtn = el("button", { type: "button", class: "star", "aria-pressed": String(stars.has(s.id)), "aria-label": s.n + "に★を付ける", text: "★" });
+  starBtn.addEventListener("click", () => {
+    stars.has(s.id) ? stars.delete(s.id) : stars.add(s.id);
+    saveStars(); render();
+  });
+  const badges = el("div", { class: "badges" },
+    s.open ? el("span", { class: "badge open", text: "中休みなし" }) : null,
+    s.rsv ? el("span", { class: "badge rsv", text: "予約できる" }) : null,
+    el("span", { class: "badge chk-" + s.chk, text: CHK[s.chk] })
+  );
+  const sub = s.sub ? el("ul", { class: "sub" }, ...s.sub.map(t => el("li", { text: t }))) : null;
+  const map = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.q);
+  const links = el("div", { class: "links" },
+    el("a", { href: s.photo, target: "_blank", rel: "noopener", text: "写真とメニュー ↗" }),
+    el("a", { href: map, target: "_blank", rel: "noopener", text: "地図 ↗" }),
+    s.tel ? el("span", { class: "tel", text: "☎ " + s.tel }) : null
+  );
+  return el("article", { class: "card" },
+    el("div", { class: "card-top" },
+      el("div", {}, el("div", { class: "genre", text: s.g }), el("h3", { text: s.n })),
+      starBtn
+    ),
+    el("div", { class: "price" }, s.p, s.ps ? el("small", { text: s.ps }) : null),
+    el("div", { class: "hours", text: s.h }),
+    badges,
+    el("p", { class: "note", text: s.note }),
+    sub,
+    links
+  );
+}
+
+function render() {
+  buildFilters();
+  const list = document.getElementById("list");
+  list.replaceChildren();
+  let total = 0;
+  AREAS.forEach(a => {
+    const shops = SHOPS.filter(s => s.a === a.id && matches(s));
+    if (!shops.length) return;
+    total += shops.length;
+    const routes = el("div", { class: "routes" }, ...a.routes.map(r =>
+      el("span", { class: "route" }, el("b", { class: r.cls, style: "background:var(--" + r.cls + ")", text: r.line }), r.text)));
+    const sec = el("section", { class: "area", id: "area-" + a.id },
+      el("div", { class: "area-head" },
+        el("h2", { text: a.name }),
+        el("span", { class: "area-hint", text: a.hint + "（" + shops.length + "軒）" }),
+        a.routes.length ? routes : null
+      ),
+      el("div", { class: "grid" }, ...shops.map(card))
+    );
+    list.append(sec);
+  });
+  if (!total) list.append(el("p", { class: "empty", text: "条件に合う店がありません。条件を外すと表示されます。" }));
+  document.getElementById("count").textContent = "全" + SHOPS.length + "件のうち " + total + "件を表示";
+}
+
+render();
+</script>
+
+</body>
+</html>
