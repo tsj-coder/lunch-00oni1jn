@@ -260,7 +260,7 @@ const SHOPS = [
     h: "11:00〜15:30（最終注文15:00）", chk: "official", tel: "03-3272-3227",
     note: "穴子の専門店。昼は予約できないので、並ぶつもりで。東京駅八重洲口から歩いて8分。",
     photo: "https://www.anago-tamai.com/menu/", q: "日本橋 玉ゐ 本店" },
-  { id: "moritaya", a: "tokyo", g: "肉", n: "モリタ屋 東京丸の内店", p: "昼 3,500円ほど",
+  { id: "moritaya", a: "tokyo", g: "すき焼き・牛丼", n: "モリタ屋 東京丸の内店", p: "昼 3,500円ほど",
     h: "11:00〜15:00（最終注文14:00）", rsv: true, chk: "site",
     note: "京都の老舗の肉屋がやっているすき焼きの店。丸ビルの35階で、景色を見ながら食べられる。",
     photo: "https://restaurant.ikyu.com/103646/highlights", q: "モリタ屋 東京丸の内店" },
@@ -268,7 +268,7 @@ const SHOPS = [
     h: "最終注文14:00（予約サイトの掲載）", rsv: true, chk: "site", tel: "03-3211-2783",
     note: "大丸東京店の12階。一品ずつ揚げてくれる。ぐるなびには11:00〜22:00の通し営業と載っていて、時間の情報が食い違う。",
     photo: "https://www.ozmall.co.jp/restaurant/7699/", q: "新宿つな八 大丸東京店" },
-  { id: "butasute", a: "tokyo", g: "肉", n: "豚捨 KITTE丸の内店", p: "牛丼・すき焼き 2,000〜3,000円ほど",
+  { id: "butasute", a: "tokyo", g: "すき焼き・牛丼", n: "豚捨 KITTE丸の内店", p: "牛丼・すき焼き 2,000〜3,000円ほど",
     h: "11:00〜14:30（最終注文13:30）", chk: "review",
     note: "三重・伊勢の老舗の肉屋。KITTEの5階。昼の最終注文が13:30と早い。",
     photo: "https://aumo.jp/articles/20749", q: "豚捨 KITTE丸の内店" },
@@ -300,6 +300,13 @@ const SHOPS = [
     h: "11:00〜22:00", open: true, rsv: true, chk: "review", tel: "03-3217-7070",
     note: "イタリアの食材店がやっている店。東京駅の地下1階（改札の外）で、丸の内地下北口からすぐ。土日は2時間制。",
     photo: "https://tabelog.com/tokyo/A1302/A130201/13212522/", q: "イータリー 丸の内店" },
+  { id: "tsukushiro", a: "tokyo", g: "中華", n: "筑紫樓 丸の内店", p: "2,000〜3,000円ほど", ps: "ふかひれの姿煮のセットは5,500円（口コミ）", h: "11:00〜22:00", open: true, rsv: true, chk: "review", tel: "03-6213-2946", note: "ふかひれ料理で知られる広東料理の店。丸ビルの5階で、丸の内南口から歩いて1分。", photo: "https://tabelog.com/tokyo/A1302/A130201/13005656/", q: "筑紫樓 丸の内店" },
+  { id: "shisen", a: "tokyo", g: "中華", n: "四川豆花飯荘 東京店", p: "四川コース（6品）4,710円", ps: "税込。昼の予約はコースだけ", h: "11:00〜15:00（最終注文14:30）", rsv: true, chk: "review", note: "新丸ビル6階の四川料理の店。コースの最後に麻婆豆腐が出る。東京駅から地下でつながっている。", photo: "https://tabelog.com/tokyo/A1302/A130201/13038505/", q: "四川豆花飯荘 東京店" },
+  { id: "tokarin", a: "tokyo", g: "中華", n: "中国料理 桃花林 日本橋室町賓館", p: "2,000〜3,000円ほど", ps: "予算の目安。昼の値段は未確認", h: "11:00〜15:30（最終注文15:00）", rsv: true, chk: "review", tel: "03-3231-2883", note: "ホテルオークラの中国料理の店。三越前駅から地下でつながっている。", photo: "https://tabelog.com/tokyo/A1302/A130202/13117849/", q: "桃花林 日本橋室町賓館" },
+  { id: "innocent", a: "tokyo", g: "焼肉・牛タン", n: "焼肉 The INNOCENT CARVERY 新丸ビル店", p: "タンと和牛のランチ 1,580円から", ps: "黒毛和牛の5種盛りは5,500円（口コミ）", h: "11:00〜15:00（最終注文14:00）", rsv: true, chk: "review", note: "新丸ビルの5階。昼は90分制。", photo: "https://tabelog.com/tokyo/A1302/A130201/13213760/", q: "The INNOCENT CARVERY 新丸ビル" },
+  { id: "kisuke", a: "tokyo", g: "焼肉・牛タン", n: "味の牛たん喜助 東京駅八重洲北口店", p: "牛たんハラミ定食 2,373円ほど", ps: "特切り厚焼き定食は2,737円ほど", h: "11:00〜23:00", open: true, chk: "review", note: "仙台の牛たんの店。八重洲北口の1階（グランスタ八重北）。予約はできない。", photo: "https://tabelog.com/tokyo/A1302/A130201/13006218/", q: "味の牛たん喜助 東京駅八重洲北口店" },
+  { id: "tannosuke", a: "tokyo", g: "焼肉・牛タン", n: "牛たん酒場 たん之助 丸の内オアゾ店", p: "1,000〜2,000円ほど", h: "11:00〜15:00", rsv: true, chk: "review", note: "丸の内オアゾの5階。丸の内北口から歩いて1分。", photo: "https://tabelog.com/tokyo/A1302/A130201/13298203/", q: "牛たん酒場 たん之助 丸の内オアゾ店" },
+  { id: "mikata", a: "tokyo", g: "すき焼き・牛丼", n: "純但馬牛 美方", p: "すき焼きの卵かけご飯 2,750円ほど", h: "10:00〜22:30", open: true, chk: "review", note: "兵庫の但馬牛の店。東京駅の改札の中（グランスタ東京の地下1階）なので、新幹線を降りて改札を出る前に寄れる。予約はできない。", photo: "https://tabelog.com/tokyo/A1302/A130201/13249148/", q: "純但馬牛 美方 グランスタ東京" },
   { id: "kaneko", a: "tokyo", g: "天ぷら・天丼", n: "日本橋 天丼 金子半之助 本店", p: "江戸前天丼 1,600円ほど",
     h: "時間は未確認", chk: "review", tel: "03-3243-0707",
     note: "行列で知られる天丼の店。",
@@ -367,6 +374,10 @@ const SHOPS = [
     h: "11:30〜14:30・日曜休み", rsv: true, chk: "review", tel: "03-3812-9616",
     note: "16席の小さなナポリピッツァの店。予約が取りにくい。湯島駅から歩いて4分ほど。",
     photo: "https://tabelog.com/tokyo/A1311/A131101/13057017/", q: "アランジャルシ 湯島" },
+  { id: "taishoen", a: "ueno", g: "焼肉・牛タン", n: "焼肉上野太昌園 本店", p: "特上タン塩ランチ 2,900円", ps: "特上カルビランチ 2,800円、まろたい太ランチ 1,830円など。税込", h: "11:00〜22:00・年中無休", open: true, rsv: true, chk: "review", tel: "03-3831-6365", note: "上野の老舗の焼肉店。上野広小路駅から歩いて1分。", photo: "https://tabelog.com/tokyo/A1311/A131101/13003600/", q: "焼肉上野太昌園 本店" },
+  { id: "yansando", a: "ueno", g: "焼肉・牛タン", n: "焼肉陽山道 上野本店", p: "1,000〜2,000円ほど", h: "11:30〜22:00", open: true, rsv: true, chk: "review", note: "御徒町駅から歩いて2分の焼肉店。", photo: "https://tabelog.com/tokyo/A1311/A131101/13016717/", q: "焼肉陽山道 上野本店" },
+  { id: "negishi", a: "ueno", g: "焼肉・牛タン", n: "ねぎし 上野駅前店", p: "しろたん厚切りのセット 2,600円ほど", h: "10:30〜22:00", open: true, chk: "review", tel: "03-5807-1588", note: "牛たんと、とろろ麦めしの店。上野駅広小路口から歩いて1分。", photo: "https://tabelog.com/tokyo/A1311/A131101/13019185/", q: "ねぎし 上野駅前店" },
+  { id: "yangxiang", a: "ueno", g: "中華", n: "羊香味坊", p: "昼は1,000円前後", ps: "2021年に載った値段", h: "12:00〜23:00", open: true, rsv: true, chk: "review", tel: "03-6803-0168", note: "羊の肉を使う、中国の東北地方の料理の店。御徒町駅南口から歩いて3分。", photo: "https://tabelog.com/tokyo/A1311/A131101/13200566/", q: "羊香味坊 御徒町" },
   { id: "kamotonegi", a: "ueno", g: "ラーメン", n: "らーめん 鴨to葱", p: "鴨らーめん 1,080円ほど",
     h: "10:00〜22:30（スープがなくなり次第終わり）", open: true, chk: "review",
     note: "鴨のだしのラーメン。御徒町駅から歩いて2分。",
@@ -400,13 +411,24 @@ const SHOPS = [
     h: "時間は未確認（ラクーアの飲食店はおおむね11:00〜22:00）", chk: "review",
     note: "日本橋の穴子の店が、東京ドームシティのラクーアに出している店。",
     photo: "https://www.anago-tamai.com/menu/", q: "日本橋 玉ゐ ラクーア店" },
-  { id: "jojoen", a: "dome", g: "肉", n: "叙々苑 東京ドームシティラクーア店", p: "昼 3,000〜4,000円ほど",
+  { id: "jojoen", a: "dome", g: "焼肉・牛タン", n: "叙々苑 東京ドームシティラクーア店", p: "昼 3,000〜4,000円ほど",
     h: "昼のメニューは16:00まで", chk: "review", tel: "03-3816-8989",
     note: "ほかの店より遅くまで昼のメニューがある焼肉店。",
     photo: "https://gurunavi.com/en/g271794/rev/rst/", q: "叙々苑 東京ドームシティラクーア店" }
 ];
 
 const TABELOG = {
+  tsukushiro: ["3.58", "https://tabelog.com/tokyo/A1302/A130201/13005656/"],
+  shisen: ["3.54", "https://tabelog.com/tokyo/A1302/A130201/13038505/"],
+  tokarin: ["3.60", "https://tabelog.com/tokyo/A1302/A130202/13117849/"],
+  innocent: ["3.47", "https://tabelog.com/tokyo/A1302/A130201/13213760/"],
+  kisuke: ["3.36", "https://tabelog.com/tokyo/A1302/A130201/13006218/"],
+  tannosuke: ["3.41", "https://tabelog.com/tokyo/A1302/A130201/13298203/"],
+  mikata: ["3.46", "https://tabelog.com/tokyo/A1302/A130201/13249148/"],
+  taishoen: ["3.49", "https://tabelog.com/tokyo/A1311/A131101/13003600/"],
+  yansando: ["3.49", "https://tabelog.com/tokyo/A1311/A131101/13016717/"],
+  negishi: ["3.22", "https://tabelog.com/tokyo/A1311/A131101/13019185/"],
+  yangxiang: ["3.53", "https://tabelog.com/tokyo/A1311/A131101/13200566/"],
   oreno: ["3.40", "https://tabelog.com/tokyo/A1302/A130201/13240231/"],
   viaggio: ["3.59", "https://tabelog.com/tokyo/A1302/A130201/13286321/"],
   a16: ["3.49", "https://tabelog.com/tokyo/A1302/A130201/13096434/"],
@@ -444,7 +466,7 @@ const TABELOG = {
   jojoen: ["3.34", "https://tabelog.com/tokyo/A1310/A131003/13003545/"]
 };
 
-const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "肉", "とんかつ", "洋食", "イタリアン", "和食の膳", "ラーメン"];
+const GENRES = ["寿司", "鰻・穴子", "天ぷら・天丼", "蕎麦", "焼肉・牛タン", "すき焼き・牛丼", "とんかつ", "洋食", "イタリアン", "中華", "和食の膳", "ラーメン"];
 const FLAGS = [
   { id: "open", label: "中休みなし" },
   { id: "rsv", label: "予約できる" },
